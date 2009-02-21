@@ -23,16 +23,7 @@ module R2shell
       
       puts "EXP2:\t#{exp.inspect}"
       
-      _process(exp)
-      # case exp.first
-      # when :fcall, :call, :vcall, :if
-      # else
-      #   process(exp)
-      # end
-    end
-    
-    def autoexec(res)
-      res.is_a?(R2shell::Command) ? res.execute : res
+      autoexec(exp)
     end
     
     private
@@ -41,18 +32,16 @@ module R2shell
       :"__#{Time.now.to_i}#{rand(100000)}__"
     end
 
-    def _process(exp)
-      val = process(exp)
-      # [:call, [:const, :R2shell], :autoexec, [:array, val]]
-      
+    def autoexec(exp)
       var = gensym
+      val = process(exp)
       [:block,
-       [:dasgn_curr, var, val],
-       [:if,
-         [:call,[:dvar, var],:is_a?,[:array,[:colon2, [:const, :R2shell], :Command]]],
-         [:call, [:dvar, var], :execute],
-         [:dvar, var]
-       ]
+        [:dasgn_curr, var, val],
+        [:if,
+          [:call,[:dvar, var],:is_a?,[:array,[:colon2, [:const, :R2shell], :Command]]],
+          [:call, [:dvar, var], :execute],
+          [:dvar, var]
+        ]
       ]
     end
     

@@ -21,7 +21,6 @@ module R2shell
             puts "-"*20
     Shell.new.instance_eval ruby
   end
-  
 end
 
 def R2shell(&block)
