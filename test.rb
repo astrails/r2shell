@@ -23,7 +23,19 @@ R2shell do
 
   echo "if exp" if true
   
-  for a in [1, 2, 3] do
+  for a in [  1, 2, 3] do
     echo "for exp"
   end
+end if false
+
+R2shell do
+  begin
+    if true
+      echo 123
+    else
+      echo 456
+    end
+    echo 678
+  end
+  # R2shell.autoexec(:foo)
 end

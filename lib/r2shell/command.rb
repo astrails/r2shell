@@ -26,6 +26,7 @@ module R2shell
     end
     
     def execute
+      puts "EXEC: #{@cmd}" unless @result
       system @cmd
     end
     

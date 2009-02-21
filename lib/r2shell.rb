@@ -10,7 +10,11 @@ module R2shell
             pp exp
             puts "-"*20
             
-    exp = Rewriter.new.process(exp)
+    exp = Rewriter.new.process2(exp)
+
+    puts "exp2:"
+    pp exp
+    puts "-"*20
             
     ruby = Ruby2Ruby.new.process(exp)
             puts "ruby:\n#{ruby}"
