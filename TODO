@@ -1,0 +1,3 @@
+- support equivalent of shell -x and -e
+- support status query (if test("-x", "/bin/bash"))
+- rewrite 'for' and 'iter'
