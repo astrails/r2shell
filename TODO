@@ -1,3 +1,8 @@
 - support equivalent of shell -x and -e
+  -e should throw exception when command returns non-zero value
 - support status query (if test("-x", "/bin/bash"))
-- rewrite 'for' and 'iter'
+  probably need another kind of rewrite (process3?) and fire it on if conditions and probably on some logic operations.
+- define && and || to use status
++ rewrite 'for' and 'iter'
+- need other rewrites?
+- consider running commands with popen4. on enumeration ca do gets and on exec - read and dump to screen (w/o buffering.)

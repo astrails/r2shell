@@ -6,7 +6,9 @@ module R2shell
     end
 
     def result
-      puts "RUN: #{@cmd}" unless @result
+      if $TEST
+        puts "RUN: #{@cmd}" unless @result
+      end
       @result ||= %x{#{@cmd}}
     end
 
@@ -26,7 +28,10 @@ module R2shell
     end
     
     def execute
-      puts "EXEC: #{@cmd}" unless @result
+      if $TEST
+        puts "EXEC: #{@cmd}" unless @result
+      end
+      # TODO: assert didn't run
       system @cmd
     end
     

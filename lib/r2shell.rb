@@ -6,19 +6,25 @@ module R2shell
   # run block with shell commands support
   def self.with_shell_commands(&block)
     exp = block.to_sexp.last
-            puts "exp:"
-            pp exp
-            puts "-"*20
+            if $TEST
+              puts "exp:"
+              pp exp
+              puts "-"*20
+            end
             
     exp = Rewriter.new.process2(exp)
 
-    puts "exp2:"
-    pp exp
-    puts "-"*20
+            if $TEST
+              puts "exp2:"
+              pp exp
+              puts "-"*20
+            end
             
     ruby = Ruby2Ruby.new.process(exp)
-            puts "ruby:\n#{ruby}"
-            puts "-"*20
+            if $TEST
+              puts "ruby:\n#{ruby}"
+              puts "-"*20
+            end
     Shell.new.instance_eval ruby
   end
 end
