@@ -33,3 +33,7 @@ Example
 		make target
 	  end
 	end
+
+
+
+Copyright (c) 2009 Vitaly Kushner <vitaly@astrails.com>, released under the MIT license
