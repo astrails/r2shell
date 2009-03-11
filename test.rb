@@ -8,6 +8,9 @@ $TEST = true
 
 R2shell do
   res = ls("-l")
+  cd "/"
+
+  res = ls("-l")
   echo("abc") | sed("s/b/B/")
   pwd
   cd "/"
@@ -20,12 +23,12 @@ R2shell do
   end
 
   echo "if exp" if true
-  
+
   for d in ["/", "/bin"] do
     echo d
     echo "usr#{d}"
   end
-  
+
   for a in [  1, 2, 3] do
     echo "for exp"
   end

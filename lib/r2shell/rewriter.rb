@@ -11,7 +11,11 @@ module R2shell
       
       case exp.first
       when :block
-        exp.map{|s| process2(s)}
+        # for block all the values except for the last are lost, so we need to exec them
+        last = exp.pop
+        res = exp.map{|s| process2(s)}
+        res << process(last)
+        autoexec(res)
       when :iter, :for
         last = exp.pop
         exp.map{|s| process(s)} << process2(last)
@@ -27,7 +31,7 @@ module R2shell
       
       puts "EXP2:\t#{exp.inspect}" if $TEST
       
-      autoexec(exp)
+      autoexec(process(exp))
     end
     
     private
@@ -36,9 +40,8 @@ module R2shell
       :"__#{Time.now.to_i}#{rand(100000)}__"
     end
 
-    def autoexec(exp)
+    def autoexec(val)
       var = gensym
-      val = process(exp)
       s(:block,
         s(:lasgn, var, val),
         s(:if,
