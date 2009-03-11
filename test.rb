@@ -7,6 +7,7 @@ require 'r2shell'
 $TEST = true
 
 R2shell do
+  res = ls("-l")
   echo("abc") | sed("s/b/B/")
   pwd
   cd "/"
