@@ -1,4 +1,3 @@
-require 'r2shell/command'
 
 module R2shell
   class Shell

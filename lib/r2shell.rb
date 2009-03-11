@@ -1,3 +1,7 @@
+require 'ruby2ruby'
+require 'parse_tree'
+require 'parse_tree_extensions'
+require 'r2shell/command'
 require 'r2shell/shell'
 require 'r2shell/rewriter'
 
