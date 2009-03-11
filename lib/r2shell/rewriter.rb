@@ -15,7 +15,6 @@ module R2shell
         last = exp.pop
         res = exp.map{|s| process2(s)}
         res << process(last)
-        autoexec(res)
       when :iter, :for
         last = exp.pop
         exp.map{|s| process(s)} << process2(last)
@@ -26,8 +25,6 @@ module R2shell
     
     def process2(exp)
       return exp unless exp.is_a?(Array)
-      
-      return process(exp) if [:block, :iter, :for].include?(exp.first)
       
       puts "EXP2:\t#{exp.inspect}" if $TEST
       
