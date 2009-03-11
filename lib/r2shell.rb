@@ -8,7 +8,7 @@ require 'r2shell/rewriter'
 module R2shell
 
   # run block with shell commands support
-  def self.with_shell_commands(&block)
+  def self.with_shell_commands(opts, &block)
     exp = block.to_sexp.last
             if $TEST
               puts "exp:"
@@ -29,10 +29,10 @@ module R2shell
               puts "ruby:\n#{ruby}"
               puts "-"*20
             end
-    Shell.new.instance_eval ruby
+    Shell.new(opts).instance_eval ruby
   end
 end
 
-def R2shell(&block)
-  R2shell.with_shell_commands(&block)
+def R2shell(opts = {}, &block)
+  R2shell.with_shell_commands(opts, &block)
 end

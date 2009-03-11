@@ -1,8 +1,20 @@
 module R2shell
   class Command
+    class ExecutionError < RuntimeError; end
     attr_reader :command
-    def initialize(command)
+    def initialize(command, opts = {})
       @command = command
+      @check_errors = opts[:check_errors]
+    end
+
+    def status(check_errors)
+      return @status if defined?(@status)
+
+      @status = $?.to_i
+      if @check_errors && check_errors
+        raise ExecutionError, "Shell command #{@command.inspect} returned #{@status}" unless @status.zero?
+      end
+      @status = @status.zero?
     end
 
     def result
@@ -10,6 +22,8 @@ module R2shell
         puts "RUN: #{@command}" unless @result
       end
       @result ||= %x{#{@command}}
+      status(@check_errors)
+      @result
     end
 
     alias :to_s :result
@@ -32,12 +46,13 @@ module R2shell
       end
     end
     
-    def execute
+    def execute(check_errors = true)
       if $TEST
         puts "EXEC: #{@command}" unless @result
       end
       # TODO: assert didn't run
       system @command
+      status(check_errors)
     end
     
     def method_missing(*args)

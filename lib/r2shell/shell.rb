@@ -2,13 +2,21 @@
 module R2shell
   class Shell
 
+    def initialize(opts = {})
+      @opts = opts
+    end
+
+    def sh(sym, *args)
+      args = *args unless args.empty?
+
+      Command.new(shelljoin(sym.to_s, *args), @opts)
+    end
+
     def method_missing(sym, *args)
       `which #{sym}`
       super unless $?.to_i == 0
 
-      args = *args unless args.empty?
-
-      Command.new(shelljoin(sym.to_s, *args))
+      sh(sym, *args)
     end
 
     def cd(dir)
