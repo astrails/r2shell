@@ -47,4 +47,6 @@ R2shell do
     echo "iter exp 2"
   end
 
+  puts ls.grep(/mac/)
+
 end

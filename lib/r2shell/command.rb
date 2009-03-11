@@ -1,27 +1,32 @@
 module R2shell
   class Command
-    attr_reader :cmd
-    def initialize(cmd)
-      @cmd = cmd
+    attr_reader :command
+    def initialize(command)
+      @command = command
     end
 
     def result
       if $TEST
-        puts "RUN: #{@cmd}" unless @result
+        puts "RUN: #{@command}" unless @result
       end
-      @result ||= %x{#{@cmd}}
+      @result ||= %x{#{@command}}
     end
 
     alias :to_s :result
     
-    def to_lines
-      result.split("\n")
+    def lines
+      @lines ||= result.split("\n")
     end
+
+    def each(&block)
+      lines.each(&block)
+    end
+    include Enumerable
 
     def |(other)
       if Command === other
         # TODO: assert didn't run
-        Command.new(@cmd + ' | ' + other.cmd)
+        Command.new(@command + ' | ' + other.command)
       else
         result | other
       end
@@ -29,10 +34,10 @@ module R2shell
     
     def execute
       if $TEST
-        puts "EXEC: #{@cmd}" unless @result
+        puts "EXEC: #{@command}" unless @result
       end
       # TODO: assert didn't run
-      system @cmd
+      system @command
     end
     
     def method_missing(*args)
