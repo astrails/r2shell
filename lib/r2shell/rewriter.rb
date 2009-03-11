@@ -42,8 +42,8 @@ module R2shell
       s(:block,
         s(:lasgn, var, val),
         s(:if,
-          s(:call, s(:lvar, var),:is_a?, s(:array, s(:colon2, s(:const, :R2shell), :Command))),
-          s(:call, s(:lvar, var), :execute),
+          s(:call, s(:lvar, var),:is_a?, s(:arglist, s(:colon2, s(:const, :R2shell), :Command))),
+          s(:call, s(:lvar, var), :execute, s(:arglist)),
           s(:lvar, var)
         )
       )
